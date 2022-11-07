@@ -1,0 +1,3 @@
+/Users/schoe/Desktop/webserv/CMakeFiles/webserv.dir
+/Users/schoe/Desktop/webserv/CMakeFiles/edit_cache.dir
+/Users/schoe/Desktop/webserv/CMakeFiles/rebuild_cache.dir

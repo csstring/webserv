@@ -1,5 +1,5 @@
 #include "webserv.hpp"
-
+#include <iostream>
 int main(int argc, char *argv[], char *envp[])
 {
   if (argc != 2)
