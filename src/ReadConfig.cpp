@@ -29,13 +29,13 @@ void  parseConfigure(char *configFilePath)
   std::string temp_line;
   std::map<std::string, ConfigureNode> server;
   std::stack<char> vaild_check;
-/*
+
   for (std::string::iterator it = fileData.begin(); it != fileData.end(); it++)
   {
 
   }
-*/
+/*
   server["server_name"].elem.push_back("test");
   std::cout << *(server.find("server_name")->second.elem.begin()) << std::endl;
-  //std::cout << fileData;
+  std::cout << fileData;*/
 }
