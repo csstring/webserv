@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 98)
 
 set(SOURCE_FILES
         src/main.cpp
-        src/ReadConfig.cpp)
+        src/Parser.cpp)
 
 add_executable(webserv
         ${SOURCE_FILES}

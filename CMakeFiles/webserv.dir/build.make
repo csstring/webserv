@@ -83,30 +83,30 @@ CMakeFiles/webserv.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/webserv.dir/src/main.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/schoe/Desktop/webserv/src/main.cpp -o CMakeFiles/webserv.dir/src/main.cpp.s
 
-CMakeFiles/webserv.dir/src/ReadConfig.cpp.o: CMakeFiles/webserv.dir/flags.make
-CMakeFiles/webserv.dir/src/ReadConfig.cpp.o: src/ReadConfig.cpp
-CMakeFiles/webserv.dir/src/ReadConfig.cpp.o: CMakeFiles/webserv.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/schoe/Desktop/webserv/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/webserv.dir/src/ReadConfig.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/webserv.dir/src/ReadConfig.cpp.o -MF CMakeFiles/webserv.dir/src/ReadConfig.cpp.o.d -o CMakeFiles/webserv.dir/src/ReadConfig.cpp.o -c /Users/schoe/Desktop/webserv/src/ReadConfig.cpp
+CMakeFiles/webserv.dir/src/Parser.cpp.o: CMakeFiles/webserv.dir/flags.make
+CMakeFiles/webserv.dir/src/Parser.cpp.o: src/Parser.cpp
+CMakeFiles/webserv.dir/src/Parser.cpp.o: CMakeFiles/webserv.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/schoe/Desktop/webserv/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/webserv.dir/src/Parser.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/webserv.dir/src/Parser.cpp.o -MF CMakeFiles/webserv.dir/src/Parser.cpp.o.d -o CMakeFiles/webserv.dir/src/Parser.cpp.o -c /Users/schoe/Desktop/webserv/src/Parser.cpp
 
-CMakeFiles/webserv.dir/src/ReadConfig.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/webserv.dir/src/ReadConfig.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/schoe/Desktop/webserv/src/ReadConfig.cpp > CMakeFiles/webserv.dir/src/ReadConfig.cpp.i
+CMakeFiles/webserv.dir/src/Parser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/webserv.dir/src/Parser.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/schoe/Desktop/webserv/src/Parser.cpp > CMakeFiles/webserv.dir/src/Parser.cpp.i
 
-CMakeFiles/webserv.dir/src/ReadConfig.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/webserv.dir/src/ReadConfig.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/schoe/Desktop/webserv/src/ReadConfig.cpp -o CMakeFiles/webserv.dir/src/ReadConfig.cpp.s
+CMakeFiles/webserv.dir/src/Parser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/webserv.dir/src/Parser.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/schoe/Desktop/webserv/src/Parser.cpp -o CMakeFiles/webserv.dir/src/Parser.cpp.s
 
 # Object files for target webserv
 webserv_OBJECTS = \
 "CMakeFiles/webserv.dir/src/main.cpp.o" \
-"CMakeFiles/webserv.dir/src/ReadConfig.cpp.o"
+"CMakeFiles/webserv.dir/src/Parser.cpp.o"
 
 # External object files for target webserv
 webserv_EXTERNAL_OBJECTS =
 
 webserv: CMakeFiles/webserv.dir/src/main.cpp.o
-webserv: CMakeFiles/webserv.dir/src/ReadConfig.cpp.o
+webserv: CMakeFiles/webserv.dir/src/Parser.cpp.o
 webserv: CMakeFiles/webserv.dir/build.make
 webserv: CMakeFiles/webserv.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/schoe/Desktop/webserv/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable webserv"

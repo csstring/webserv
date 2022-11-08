@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/schoe/Desktop/webserv/src/ReadConfig.cpp" "CMakeFiles/webserv.dir/src/ReadConfig.cpp.o" "gcc" "CMakeFiles/webserv.dir/src/ReadConfig.cpp.o.d"
+  "/Users/schoe/Desktop/webserv/src/Parser.cpp" "CMakeFiles/webserv.dir/src/Parser.cpp.o" "gcc" "CMakeFiles/webserv.dir/src/Parser.cpp.o.d"
   "/Users/schoe/Desktop/webserv/src/main.cpp" "CMakeFiles/webserv.dir/src/main.cpp.o" "gcc" "CMakeFiles/webserv.dir/src/main.cpp.o.d"
   )
 

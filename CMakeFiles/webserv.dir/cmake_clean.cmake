@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/webserv.dir/src/ReadConfig.cpp.o"
-  "CMakeFiles/webserv.dir/src/ReadConfig.cpp.o.d"
+  "CMakeFiles/webserv.dir/src/Parser.cpp.o"
+  "CMakeFiles/webserv.dir/src/Parser.cpp.o.d"
   "CMakeFiles/webserv.dir/src/main.cpp.o"
   "CMakeFiles/webserv.dir/src/main.cpp.o.d"
   "webserv"
