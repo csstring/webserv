@@ -1,7 +1,4 @@
 #include "Parser.hpp"
-#include <stack>
-#include <iostream>
-#include <fstream>
 #include <cctype>
 //CommonParser
 bool CommonParser::IsNodeElemEmpty(ParserNode node)
@@ -15,6 +12,7 @@ ParserNode* CommonParser::GetNextNode(ParserNode node)
 {
     return (node.next);
 }
+/*
 std::vector<std::string> CommonParser::GetNodeElem(std::string key)
 {
     ParserNode *temp = NULL;
@@ -31,25 +29,28 @@ std::vector<std::string> CommonParser::GetNodeElem(std::string key)
             break;
     }
     return it->second;
-}
+}*/
 
 void CommonParser::displayAll()
 {
-    ParserNode *temp = &rootnode;
-    while (temp)
+    for (unsigned int i = 0; i < nodevector.size(); ++i)
     {
-        std::cout << temp->categoly << std::endl;
-        for (std::map<std::string, std::vector<std::string> >::iterator it = temp->elem.begin(); \
-                it != temp->elem.end(); ++it)
+        ParserNode *temp = &nodevector[i];
+        while (temp)
         {
-            std::cout << "  "<<it->first << " : ";
-            for (unsigned long i = 0; i < it->second.size(); ++i)
+            std::cout << temp->categoly << std::endl;
+            for (std::map<std::string, std::vector<std::string> >::iterator it = temp->elem.begin(); \
+                it != temp->elem.end(); ++it)
             {
-                std::cout << it->second[i] << " ";
+                std::cout << "  "<<it->first << " : ";
+                for (unsigned long i = 0; i < it->second.size(); ++i)
+                {
+                    std::cout << it->second[i] << " ";
+                }
+                std::cout << std::endl;
             }
-            std::cout << std::endl;
+            temp = temp->next;
         }
-        temp = temp->next;
     }
 }
 
@@ -99,7 +100,7 @@ void ConfParser::getElem(ParserNode* temp, std::string line)
             }
             continue;
         }
-        if (*it == ':')
+        if (*it == ':' && key.size() == 0)
         {
             key = buffer;
             buffer.clear();
@@ -126,42 +127,103 @@ ParserNode* ConfParser::EnterNode(ParserNode* temp, std::string line)
     }
     return temp;
 }
-ParserNode* ConfParser::exitNode(ParserNode* temp, std::string prevCategoly)
+
+CommonParser::~CommonParser()
 {
-    while (temp->prev)
+    ParserNode *origin;
+    ParserNode *temp;
+
+    for (unsigned int i = 0; i < nodevector.size(); ++i)
     {
-        temp = temp->prev;
-        if (temp->categoly == prevCategoly)
-            break;
+        origin = nodevector[i].next;
+        while (origin)
+        {
+            temp = origin->next;
+            delete origin;
+            origin = temp;
+        }
     }
-    return temp;
 }
 
-void ConfParser::parsing(std::string FileRoot)
+void ConfParser::parsingOneNode(std::istream& is)
 {
-    std::filebuf fb;
     std::string buffer;
-    ParserNode *temp = &this->rootnode;
-    std::string prevCategoly;
+    ParserNode rootnode;
+    ParserNode *temp = &rootnode;
 
-    if (fb.open(FileRoot, std::ios::in) == NULL)
-        return;
-    std::istream is(&fb);
-    while (is)
+    rootnode.next = NULL;
+    rootnode.prev = NULL;
+    while (!getline(is, buffer).eof())
     {
-        getline(is, buffer);
         if (buffer.size() == 0)
             continue;
         if (*buffer.rbegin() == ';')
             getElem(temp, buffer);
         else if(*buffer.rbegin() == '{')
-        {
-            prevCategoly = temp->categoly;
             temp = EnterNode(temp, buffer);
-        }
         else if(*buffer.rbegin() == '}')
-            temp = exitNode(temp, prevCategoly);
+        {
+            if (temp == rootnode.next)
+                break;
+            temp = rootnode.next;
+        }
         buffer.clear();
     }
+    if (rootnode.next)
+        nodevector.push_back(rootnode);
+}
+
+void ConfParser::parsing(std::string FileRoot)
+{
+    std::filebuf fb;
+
+    if (fb.open(FileRoot, std::ios::in) == NULL)
+        return;
+    std::istream is(&fb);
+    while (is)
+        parsingOneNode(is);
+    fb.close();
+}
+//RequestParser
+
+//private
+void RequestParser::parsingOneNode(std::istream& is)
+{
+    std::string buffer;
+    ParserNode rootnode;
+    ParserNode *temp = &rootnode;
+
+    rootnode.next = NULL;
+    rootnode.prev = NULL;
+    while (!getline(is, buffer).eof())
+    {
+        if (buffer.size() == 0)
+            continue;
+        if (*buffer.rbegin() == ';')
+            getElem(temp, buffer);
+        else if(*buffer.rbegin() == '{')
+            temp = EnterNode(temp, buffer);
+        else if(*buffer.rbegin() == '}')
+        {
+            if (temp == rootnode.next)
+                break;
+            temp = rootnode.next;
+        }
+        buffer.clear();
+    }
+    if (rootnode.next)
+        nodevector.push_back(rootnode);
+}
+
+//public
+void RequestParser::parsing(std::string FileRoot)
+{
+    std::filebuf fb;
+
+    if (fb.open(FileRoot, std::ios::in) == NULL)
+        return;
+    std::istream is(&fb);
+    while (is)
+        parsingOneNode(is);
     fb.close();
 }

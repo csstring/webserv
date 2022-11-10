@@ -1,6 +1,9 @@
 #include <map>
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
+#include <stack>
 #include <exception>
 
 struct ParserNode
@@ -14,16 +17,12 @@ struct ParserNode
 class CommonParser
 {
 protected:
-    ParserNode rootnode;
+    std::vector<ParserNode> nodevector;
 public:
-    CommonParser()
-    {
-        rootnode.next = NULL;
-        rootnode.prev = NULL;
-    }
     bool IsNodeElemEmpty(ParserNode node);
     ParserNode* GetNextNode(ParserNode node);
-    std::vector<std::string> GetNodeElem(std::string key);
+//  std::vector<std::string> GetNodeElem(std::string key);
+    ~CommonParser();
     void displayAll();
 };
 
@@ -32,9 +31,18 @@ class ConfParser : public CommonParser
 private:
     void getElem(ParserNode* temp, std::string line);
     ParserNode* EnterNode(ParserNode* temp, std::string line);
-    ParserNode* exitNode(ParserNode* temp, std::string prevCategoly);
-
+    void parsingOneNode(std::istream& is);
 public:
-    bool vaildCheck(std::string FileRoot);
+    static bool vaildCheck(std::string FileRoot);
+    void parsing(std::string FileRoot);
+};
+
+class RequestParser : public CommonParser
+{
+private:
+    void getElem(ParserNode* temp, std::string line);
+    ParserNode* EnterNode(ParserNode* temp, std::string line);
+    void parsingOneNode(std::istream& is);
+public:
     void parsing(std::string FileRoot);
 };
