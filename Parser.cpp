@@ -12,24 +12,34 @@ ParserNode* CommonParser::GetNextNode(ParserNode node)
 {
     return (node.next);
 }
-/*
-std::vector<std::string> CommonParser::GetNodeElem(std::string key)
+
+std::vector<std::string> ConfParser::GetNodeElem(size_t server_index, std::string categoly, std::string key)
 {
     ParserNode *temp = NULL;
     std::map<std::string, std::vector<std::string> >::iterator it;
 
-    temp = rootnode.next;
-    it = rootnode.elem.end();
-    while (temp)
-    {
-        it = temp->elem.find(key);
-        if (it == temp->elem.end())
+    temp = nodevector[server_index].next;
+    while (temp->categoly != categoly)
             temp = temp->next;
-        else
+    it = temp->elem.find(key);
+    return it->second;
+}
+
+std::vector<std::string> RequestParser::GetNodeElem(std::string categoly, std::string key)
+{
+    std::map<std::string, std::vector<std::string> >::iterator it;
+
+    it = nodevector[0].elem.end();
+    for (unsigned int i = 0; i < nodevector.size(); ++i)
+    {
+        if (nodevector[i].categoly == categoly)
+        {
+            it = nodevector[i].elem.find(key);
             break;
+        }
     }
     return it->second;
-}*/
+}
 
 void CommonParser::displayAll()
 {
@@ -187,43 +197,89 @@ void ConfParser::parsing(std::string FileRoot)
 //RequestParser
 
 //private
-void RequestParser::parsingOneNode(std::istream& is)
+void RequestParser::addNode(std::string catename)
+{
+    ParserNode temp;
+
+    temp.next = NULL;
+    temp.prev = NULL;
+    temp.categoly = catename;
+    nodevector.push_back(temp);
+}
+void RequestParser::getStartLine(std::string& line)
 {
     std::string buffer;
-    ParserNode rootnode;
-    ParserNode *temp = &rootnode;
-
-    rootnode.next = NULL;
-    rootnode.prev = NULL;
-    while (!getline(is, buffer).eof())
+    unsigned int k = 0;
+    std::vector<std::string> value;
+    std::string key[] = {"method", "path", "protocol"};
+    
+    addNode("startline");
+    for(unsigned int i = 0; i < line.size(); ++i)
     {
-        if (buffer.size() == 0)
-            continue;
-        if (*buffer.rbegin() == ';')
-            getElem(temp, buffer);
-        else if(*buffer.rbegin() == '{')
-            temp = EnterNode(temp, buffer);
-        else if(*buffer.rbegin() == '}')
+        if (isblank(line[i]))
         {
-            if (temp == rootnode.next)
-                break;
-            temp = rootnode.next;
+            value.push_back(buffer);
+            nodevector[0].elem[key[k++]] = value;
+            buffer.clear();
+            value.clear();
         }
-        buffer.clear();
+        else
+            buffer += line[i];
     }
-    if (rootnode.next)
-        nodevector.push_back(rootnode);
+    value.push_back(buffer);
+    nodevector[0].elem[key[k]] = value;
+    line.clear();  
 }
 
+void RequestParser::getheader(std::string &line)
+{
+    std::string key;
+    std::string buffer;
+    std::vector<std::string> value;
+
+    for (std::string::iterator it = line.begin(); it != line.end(); ++it)
+    {
+        if (isblank(*it))
+            continue;
+        if (*it == ':')
+        {
+            key = buffer;
+            it++;
+            if (isblank(*it))
+                it++;
+            buffer.assign(it, line.end());
+            value.push_back(buffer);
+            break;
+        }
+        else
+            buffer += *it;
+    }
+    nodevector[1].elem[key] = value;
+}
+
+void RequestParser::getBody(std::string& line)
+{
+    addNode("body");
+    std::vector<std::string> value;
+
+    value.push_back(line);
+    nodevector[2].elem["body"] = value;
+}
 //public
 void RequestParser::parsing(std::string FileRoot)
 {
     std::filebuf fb;
+    std::string line;
 
     if (fb.open(FileRoot, std::ios::in) == NULL)
         return;
     std::istream is(&fb);
-    while (is)
-        parsingOneNode(is);
+    getline(is, line);
+    getStartLine(line);
+    addNode("header");
+    while (!getline(is, line).eof() && line.size() != 0)
+        getheader(line);
+    getline(is, line);
+    getBody(line);
     fb.close();
 }

@@ -21,7 +21,6 @@ protected:
 public:
     bool IsNodeElemEmpty(ParserNode node);
     ParserNode* GetNextNode(ParserNode node);
-//  std::vector<std::string> GetNodeElem(std::string key);
     ~CommonParser();
     void displayAll();
 };
@@ -33,6 +32,7 @@ private:
     ParserNode* EnterNode(ParserNode* temp, std::string line);
     void parsingOneNode(std::istream& is);
 public:
+    std::vector<std::string> GetNodeElem(size_t server_index, std::string categoly ,std::string key);
     static bool vaildCheck(std::string FileRoot);
     void parsing(std::string FileRoot);
 };
@@ -40,9 +40,12 @@ public:
 class RequestParser : public CommonParser
 {
 private:
-    void getElem(ParserNode* temp, std::string line);
-    ParserNode* EnterNode(ParserNode* temp, std::string line);
+    void addNode(std::string catename);
+    void getheader(std::string& line);
+    void getBody(std::string& line);
+    void getStartLine(std::string& line);
     void parsingOneNode(std::istream& is);
 public:
+    std::vector<std::string> GetNodeElem(std::string categoly ,std::string key);
     void parsing(std::string FileRoot);
 };
