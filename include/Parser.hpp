@@ -5,7 +5,7 @@
 #include <string>
 #include <stack>
 #include <exception>
-
+#include "Server.hpp"
 struct ParserNode
 {
     ParserNode *next;
@@ -25,16 +25,17 @@ public:
     void displayAll();
 };
 
-class ConfParser : public CommonParser
+class ConfigParser : public CommonParser
 {
 private:
     void getElem(ParserNode* temp, std::string line);
     ParserNode* EnterNode(ParserNode* temp, std::string line);
     void parsingOneNode(std::istream& is);
+    void getServerAttr(Server& server, unsigned int server_index);
 public:
     std::vector<std::string> GetNodeElem(size_t server_index, std::string categoly ,std::string key);
     static bool vaildCheck(std::string FileRoot);
-    void parsing(std::string FileRoot);
+    std::vector<Server> parsing(std::string FileRoot);
 };
 
 class RequestParser : public CommonParser
